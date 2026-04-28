@@ -15,7 +15,6 @@ import {
   EyeOff,
   HelpCircle,
   Globe,
-  BookOpenCheck,
 } from "lucide-react";
 
 import {
@@ -120,18 +119,24 @@ export default function AuthPage() {
   // Illustrations
   const LoginIllustration = () => (
     <div className="hidden lg:flex w-1/2 bg-[#9ABE4B]/20 flex-col items-center justify-center p-12 relative min-h-screen">
-      <div className="flex-1 flex flex-col items-center gap-y-6 justify-center max-w-md text-center mt-2 w-full">
-        <div className="w-full max-w-lg flex flex-col gap-4">
-          {/* Div Taman Baca */}
+      <div className="flex-1 flex flex-col items-center gap-y-6 justify-center text-center w-full">
+        {/* Container utama dibatasi ukurannya sesuai lebar gambar agar label ikut menyesuaikan */}
+        <div className="w-[400px] flex flex-col gap-4">
+          {/* Div Taman Baca - Sekarang lebarnya akan mengikuti parent (400px) */}
           <div className="flex items-center justify-center gap-3 bg-white px-5 py-4 rounded-xl shadow-sm text-slate-800 w-full">
-            <BookOpenCheck className="w-7 h-7 text-[#9ABE4B]" />
+            <Image
+              src="/icons/icon-ilms-no-fill.png"
+              alt="Logo"
+              width={32}
+              height={32}
+            />
             <span className="font-extrabold text-[#1f2937] text-xl">
               Taman Baca Masyarakat (TBM)
             </span>
           </div>
 
           {/* Div Gambar */}
-          <div className="w-full shadow-md aspect-[6/7] bg-[#faecd5] rounded-3xl flex items-center justify-center overflow-hidden relative border-[6px] border-[#faecd5]">
+          <div className="w-full shadow-md aspect-[6/7] bg-[#faecd5] rounded-3xl flex items-center justify-center overflow-hidden relative">
             <Image
               src="/images/image-login.png"
               alt="Illustration"
@@ -140,7 +145,9 @@ export default function AuthPage() {
             />
           </div>
         </div>
-        <p className="text-[#374151] font-bold text-lg max-w-sm leading-relaxed antialiased">
+
+        {/* Quote */}
+        <p className="text-[#374151] font-bold text-lg max-w-[400px] leading-relaxed antialiased">
           {`"Literasi adalah jembatan menuju mimpi yang tak terbatas."`}
         </p>
       </div>
@@ -190,8 +197,8 @@ export default function AuthPage() {
               Selamat Datang Kembali
             </h1>
             <p className="text-slate-500 text-[15px] font-medium leading-relaxed pr-6">
-              Masuk untuk melanjutkan petualangan literasimu di
-              perpustakaan kami.
+              Masuk untuk melanjutkan petualangan literasimu di perpustakaan
+              kami.
             </p>
           </div>
 
@@ -276,14 +283,10 @@ export default function AuthPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-500 font-medium">
-                {error}
-              </p>
+              <p className="text-sm text-red-500 font-medium">{error}</p>
             )}
             {successMsg && (
-              <p className="text-sm text-green-500 font-medium">
-                {successMsg}
-              </p>
+              <p className="text-sm text-green-500 font-medium">{successMsg}</p>
             )}
 
             <Button

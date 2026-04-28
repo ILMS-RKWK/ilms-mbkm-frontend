@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Mail, ArrowRight, ArrowLeft, BookOpenCheck } from "lucide-react";
+import { Mail, ArrowRight, ArrowLeft } from "lucide-react";
 
 interface ForgotPasswordProps {
   email: string;
@@ -28,23 +28,22 @@ export function ForgotPasswordView({
   return (
     <div className="h-screen w-full flex bg-white font-sans text-slate-900 overflow-x-hidden">
       {/* Left Panel - Illustration */}
-      <div className="hidden lg:flex w-1/2 flex-col items-center justify-center p-12 relative min-h-screen"
-        style={{ background: "linear-gradient(180deg, #e8f5e0 0%, #f0f6ec 50%, #f5f7f2 100%)" }}>
+      <div className="hidden lg:flex w-1/2 flex-col items-center justify-center p-12 relative min-h-screen bg-[#9ABE4B]/20">
         <div className="flex-1 flex flex-col items-center justify-center max-w-md text-center w-full">
-          <div className="w-[340px] h-[340px] rounded-3xl overflow-hidden shadow-xl mb-10 relative border-4 border-white/60">
+          <div className="w-[450px] shadow-md aspect-[4/4] bg-[#faecd5] rounded-xl flex items-center justify-center overflow-hidden relative mb-6">
             <Image
               src="/images/image-forget.png"
               alt="Stacked Books"
               fill
-              className="object-cover"
+              className="object-cover scale-[1.15] origin-top"
             />
           </div>
-          <h2 className="text-[26px] font-extrabold text-[#2d5a3d] mb-3 tracking-tight">
+          <h2 className="text-[26px] font-extrabold text-[#9ABE4B] mb-3 tracking-tight">
             Kembangkan Duniamu
           </h2>
-          <p className="text-[#5a7d6a] font-medium text-[14px] leading-relaxed max-w-[320px]">
-            Akses ribuan buku dan sumber daya pengetahuan
-            dalam satu genggaman bersama LibraryGo.
+          <p className="text-[#5a7d6a] font-medium text-[16px] leading-relaxed max-w-[450px]">
+            Akses ribuan buku dan sumber daya pengetahuan dalam satu genggaman
+            bersama Rumah Kreatif Wadas Kelir.
           </p>
         </div>
       </div>
@@ -53,8 +52,13 @@ export function ForgotPasswordView({
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-8 lg:p-24 relative min-h-screen">
         <div className="w-full max-w-[420px] flex flex-col items-center">
           {/* Logo */}
-          <div className="w-14 h-14 rounded-2xl bg-[#e8f5e0] flex items-center justify-center mb-5">
-            <BookOpenCheck className="w-7 h-7 text-[#6b8f4a]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#99BD4A]/20 flex items-center justify-center mb-5">
+            <Image
+              src="/icons/icon-ilms-no-fill.png"
+              alt="Logo"
+              width={32}
+              height={32}
+            />
           </div>
 
           <p className="text-[#6b8f4a] text-[12px] font-bold tracking-[0.2em] uppercase mb-3">
@@ -65,13 +69,16 @@ export function ForgotPasswordView({
             Lupa Kata Sandi?
           </h1>
           <p className="text-slate-500 text-[14px] font-medium leading-relaxed text-center mb-8 max-w-[340px]">
-            Jangan khawatir, masukkan alamat email Anda untuk
-            menerima tautan pemulihan akun.
+            Jangan khawatir, masukkan alamat email Anda untuk menerima tautan
+            pemulihan akun.
           </p>
 
           <form onSubmit={onSubmit} className="space-y-5 w-full">
             <div className="space-y-2">
-              <Label htmlFor="forgot-email" className="font-bold text-[13px] text-slate-700">
+              <Label
+                htmlFor="forgot-email"
+                className="font-bold text-[13px] text-slate-700"
+              >
                 Alamat Email Terdaftar
               </Label>
               <div className="relative">
@@ -90,8 +97,12 @@ export function ForgotPasswordView({
               </div>
             </div>
 
-            {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
-            {successMsg && <p className="text-sm text-green-500 font-medium">{successMsg}</p>}
+            {error && (
+              <p className="text-sm text-red-500 font-medium">{error}</p>
+            )}
+            {successMsg && (
+              <p className="text-sm text-green-500 font-medium">{successMsg}</p>
+            )}
 
             <Button
               type="submit"
@@ -101,6 +112,8 @@ export function ForgotPasswordView({
               {isLoading ? "Mengirim..." : "Kirim Instruksi"}
               {!isLoading && <ArrowRight className="w-5 h-5" />}
             </Button>
+
+            <hr className="mt-14" />
 
             <div className="text-center mt-6">
               <button
@@ -116,7 +129,8 @@ export function ForgotPasswordView({
 
           {/* Copyright */}
           <p className="text-[11px] text-slate-400 font-medium mt-12 text-center">
-            © 2024 Intelligent Library Management System. Seluruh Hak Cipta Dilindungi.
+            © 2026 Intelligent Library Management System. Seluruh Hak Cipta
+            Dilindungi.
           </p>
         </div>
       </div>
