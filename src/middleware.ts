@@ -16,31 +16,28 @@ export async function middleware(req: NextRequest) {
     req,
     secret: process.env.NEXTAUTH_SECRET,
   });
-  console.log("Token di middleware:", token);
 
   if (!token) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (pathname === "/") {
-    const role = token.role as string;
+  const role = token.role as string;
 
-    const redirectTo = {
-      admin: "/admin/dashboard",
-      koordinator: "/koordinator/dashboard",
-      sales: "/sales/dashboard",
-    }[role];
-
-    if (redirectTo) {
-      return NextResponse.redirect(new URL(redirectTo, req.url));
-    }
-
-    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  // Hanya admin yang bisa mengakses route admin
+  if (pathname.startsWith("/admin") && role !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/koordinator/:path*", "/sales/:path*", "/"],
+  matcher: [
+    "/dashboard/:path*",
+    "/notifications/:path*",
+    "/reports/:path*",
+    "/setting/:path*",
+    "/users-management/:path*",
+    "/admin/:path*",
+  ],
 };
