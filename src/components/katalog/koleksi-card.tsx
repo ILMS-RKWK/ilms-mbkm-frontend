@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 
@@ -25,6 +26,9 @@ interface KoleksiCardProps {
 }
 
 export default function KoleksiCard({ biblio }: KoleksiCardProps) {
+  const pathname = usePathname();
+  const currentFrom = pathname === "/" ? "beranda" : pathname.split("/")[1] || "katalog";
+
   const imageUrl =
     biblio.image && biblio.image !== ""
       ? biblio.image.startsWith("http") || biblio.image.startsWith("/")
@@ -46,7 +50,7 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
     <div className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-[#99BD4A]/30 transition-all duration-300 flex flex-col h-full p-4">
       {/* Cover Image */}
       <Link
-        href={`/detail-katalog/${biblio.biblio_id}`}
+        href={`/detail-katalog/${biblio.biblio_id}?from=${currentFrom}`}
         className="relative w-full aspect-square rounded-xl overflow-hidden bg-[#f6f5ef] flex items-center justify-center cursor-pointer mb-4 shrink-0"
       >
         {imageUrl ? (
@@ -91,7 +95,7 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
 
       {/* Card Body */}
       <div className="flex flex-col flex-1">
-        <Link href={`/detail-katalog/${biblio.biblio_id}`}>
+        <Link href={`/detail-katalog/${biblio.biblio_id}?from=${currentFrom}`}>
           <h3 className="font-extrabold text-[#1e293b] text-[18px] leading-tight line-clamp-2 group-hover:text-[#99BD4A] transition-colors mb-1.5 cursor-pointer">
             {biblio.title || "Judul Tidak Diketahui"}
           </h3>
@@ -111,7 +115,7 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
 
         {/* Action Button */}
         <Link
-          href={`/detail-katalog/${biblio.biblio_id}`}
+          href={`/detail-katalog/${biblio.biblio_id}?from=${currentFrom}`}
           className={`w-full py-3 rounded-xl text-[15px] font-bold transition-all duration-200 text-center block ${
             isAvailable
               ? "bg-[#f4f7f4] text-[#99BD4A] hover:bg-[#99BD4A] hover:text-white"

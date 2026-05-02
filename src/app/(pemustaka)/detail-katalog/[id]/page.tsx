@@ -68,7 +68,7 @@ function DetailKatalogContent() {
   const params = useParams();
   const searchParams = useSearchParams();
   const id = params?.id as string;
-  const isFromBeranda = searchParams?.get("from") === "beranda";
+  const fromPage = searchParams?.get("from");
 
   const [book, setBook] = useState<MappedBook | null>(null);
   const [similarBooks, setSimilarBooks] = useState<SimilarBook[]>([]);
@@ -183,13 +183,13 @@ function DetailKatalogContent() {
     <div className="flex-1 w-full bg-white min-h-screen">
       <div className="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-16 pb-20">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-[14px] text-[#6B7280] mt-8 mb-4">
-          {isFromBeranda ? (
+        <nav className="flex items-center gap-2 text-[14px] text-[#6B7280] mt-8 mb-4 flex-wrap">
+          {fromPage && ["beranda", "pinjaman", "profil", "notifikasi", "kegiatan"].includes(fromPage) ? (
             <>
-              <Link href="/" className="hover:text-[#99BD4A] transition-colors">
-                Beranda
+              <Link href={fromPage === "beranda" ? "/" : `/${fromPage}`} className="hover:text-[#99BD4A] transition-colors capitalize">
+                {fromPage}
               </Link>
-              <ChevronRight className="w-4 h-4 text-slate-300" />
+              <ChevronRight className="w-4 h-4 text-slate-300 shrink-0" />
               <span className="font-bold text-[#111827]">Detail Buku</span>
             </>
           ) : (
@@ -197,11 +197,11 @@ function DetailKatalogContent() {
               <Link href="/katalog" className="hover:text-[#99BD4A] transition-colors">
                 Katalog
               </Link>
-              <ChevronRight className="w-4 h-4 text-slate-300" />
+              <ChevronRight className="w-4 h-4 text-slate-300 shrink-0" />
               <Link href={`/katalog?category=${book.ddc}`} className="hover:text-[#99BD4A] transition-colors">
                 {categoryName}
               </Link>
-              <ChevronRight className="w-4 h-4 text-slate-300" />
+              <ChevronRight className="w-4 h-4 text-slate-300 shrink-0" />
               <span className="font-bold text-[#111827]">Detail Buku</span>
             </>
           )}
