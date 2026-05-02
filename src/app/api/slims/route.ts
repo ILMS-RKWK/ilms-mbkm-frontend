@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SLIMS_BASE = "https://slims.web.id/web/api/v1/biblio";
+const SLIMS_BASE = "http://localhost:8089/bulian/api/v1/biblio";
 
 // Sample data sebagai fallback ketika SLiMS API tidak bisa diakses
 const sampleBooks = [
