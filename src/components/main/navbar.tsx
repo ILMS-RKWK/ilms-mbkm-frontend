@@ -51,7 +51,7 @@ export default function Navbar() {
         {/* Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
@@ -71,16 +71,17 @@ export default function Navbar() {
         {/* Right Section */}
         <div className="flex items-center gap-3 ml-4">
           {/* Notification Bell */}
-          <button
+          <Link
+            href="/notifikasi"
             className="relative p-2.5 rounded-full hover:bg-slate-100 transition-colors duration-200 group"
             aria-label="Notifications"
           >
             <Bell className="h-5 w-5 text-slate-500 group-hover:text-[#99BD4A] transition-colors" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
-          </button>
+          </Link>
 
           {/* User Avatar */}
-          <button className="relative w-9 h-9 rounded-full bg-gradient-to-br from-[#B4D568] to-[#99BD4A] flex items-center justify-center ring-2 ring-[#99BD4A]/20 hover:ring-[#99BD4A]/40 transition-all duration-200 overflow-hidden">
+          <Link href="/profil" className="relative w-9 h-9 rounded-full bg-gradient-to-br from-[#B4D568] to-[#99BD4A] flex items-center justify-center ring-2 ring-[#99BD4A]/20 hover:ring-[#99BD4A]/40 transition-all duration-200 overflow-hidden">
             <svg
               width="18"
               height="18"
@@ -94,7 +95,7 @@ export default function Navbar() {
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
-          </button>
+          </Link>
         </div>
       </div>
     </header>

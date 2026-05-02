@@ -44,43 +44,43 @@
   "recommendedBooks": [
     {
       "id": 1,
-      "title": "Pulang Pergi",
-      "author": "Tere Liye",
+      "title": "Kreativitas di Wadas Kelir",
+      "author": "Heri Sugiyanto",
       "matchPercent": 98,
       "coverGradient": "linear-gradient(145deg, #99BD4A, #3d5a26)",
-      "titleOnCover": "COVER BUKU\nBERTEMA\nPETUALANGAN\nPETUALANGAN"
+      "titleOnCover": "KREATIVITAS\nDI WADAS\nKELIR"
     },
     {
       "id": 2,
-      "title": "Atomic Habits",
-      "author": "James Clear",
+      "title": "Logika & Algoritma Dasar",
+      "author": "Siti Nurhaliza",
       "matchPercent": 92,
       "coverGradient": "linear-gradient(145deg, #d4b896, #c4a67a)",
-      "titleOnCover": ""
+      "titleOnCover": "LOGIKA &\nALGORITMA\nDASAR"
     },
     {
       "id": 3,
-      "title": "Sapiens",
-      "author": "Yuval Noah Harari",
+      "title": "Sejarah Nusantara Modern",
+      "author": "Budi Setiawan",
       "matchPercent": 89,
       "coverGradient": "linear-gradient(145deg, #7d9e7e, #5e8060)",
-      "titleOnCover": "COVER\nSEJARAH\nPERADABAN"
+      "titleOnCover": "SEJARAH\nNUSANTARA\nMODERN"
     },
     {
       "id": 4,
-      "title": "Cantik Itu Luka",
-      "author": "Eka Kurniawan",
+      "title": "Psikologi Pendidikan Anak",
+      "author": "Dr. Rina Marlina",
       "matchPercent": 85,
       "coverGradient": "linear-gradient(145deg, #4a6741, #364d30)",
-      "titleOnCover": "bro v e 1 n\nv o e r\nd a n a"
+      "titleOnCover": "PSIKOLOGI\nPENDIDIKAN\nANAK"
     },
     {
       "id": 5,
-      "title": "The Martian",
-      "author": "Andy Weir",
+      "title": "Bahasa Indonesia untuk Akademik",
+      "author": "Prof. Ahmad Fauzi",
       "matchPercent": 81,
       "coverGradient": "linear-gradient(145deg, #6b8e6b, #4d7050)",
-      "titleOnCover": "COVER BUKU\nILMIAH ILMIAH"
+      "titleOnCover": "BAHASA\nINDONESIA\nAKADEMIK"
     }
   ]
 }

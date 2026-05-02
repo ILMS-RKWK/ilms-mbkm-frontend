@@ -43,11 +43,11 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
     biblio.total_review ?? Math.floor(Math.random() * 150 + 20);
 
   return (
-    <div className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-[#99BD4A]/30 transition-all duration-300 flex flex-col h-full overflow-hidden">
-      {/* Cover Image — clicking card goes to detail */}
+    <div className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-[#99BD4A]/30 transition-all duration-300 flex flex-col h-full p-4">
+      {/* Cover Image */}
       <Link
         href={`/detail-katalog/${biblio.biblio_id}`}
-        className="relative w-full aspect-[4/5] overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 flex items-center justify-center cursor-pointer"
+        className="relative w-full aspect-square rounded-xl overflow-hidden bg-[#f6f5ef] flex items-center justify-center cursor-pointer mb-4 shrink-0"
       >
         {imageUrl ? (
           <Image
@@ -78,10 +78,10 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
         {/* Availability Badge */}
         <div className="absolute top-3 right-3 z-10">
           <Badge
-            className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 border-0 shadow-sm ${
+            className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 border-0 shadow-none rounded-full ${
               isAvailable
-                ? "bg-[#99BD4A] hover:bg-[#99BD4A]/90 text-white"
-                : "bg-[#64748b] hover:bg-[#64748b]/90 text-white"
+                ? "bg-[#99BD4A] text-white hover:bg-[#8aac3d]"
+                : "bg-[#94a3b8] text-white hover:bg-[#8292a8]"
             }`}
           >
             {isAvailable ? "Tersedia" : "Dipinjam"}
@@ -90,21 +90,21 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
       </Link>
 
       {/* Card Body */}
-      <div className="p-4 flex flex-col flex-1">
+      <div className="flex flex-col flex-1">
         <Link href={`/detail-katalog/${biblio.biblio_id}`}>
-          <h3 className="font-bold text-slate-800 text-[15px] leading-snug line-clamp-2 group-hover:text-[#99BD4A] transition-colors mb-1.5 cursor-pointer">
+          <h3 className="font-extrabold text-[#1e293b] text-[18px] leading-tight line-clamp-2 group-hover:text-[#99BD4A] transition-colors mb-1.5 cursor-pointer">
             {biblio.title || "Judul Tidak Diketahui"}
           </h3>
         </Link>
-        <p className="text-sm text-slate-500 line-clamp-1 mb-3">
+        <p className="text-[15px] font-medium text-slate-500 line-clamp-1 mb-3">
           {biblio.author || "Pengarang Tidak Diketahui"}
         </p>
 
         {/* Rating */}
-        <div className="flex items-center gap-1.5 mb-4 mt-auto">
-          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-          <span className="text-sm font-bold text-slate-700">{rating}</span>
-          <span className="text-xs text-slate-400">
+        <div className="flex items-center gap-1.5 mb-5 mt-auto">
+          <Star className="w-4 h-4 text-amber-400" />
+          <span className="text-[14px] font-bold text-[#1e293b]">{rating}</span>
+          <span className="text-[13px] font-medium text-slate-400">
             ({reviewCount} ulasan)
           </span>
         </div>
@@ -112,10 +112,10 @@ export default function KoleksiCard({ biblio }: KoleksiCardProps) {
         {/* Action Button */}
         <Link
           href={`/detail-katalog/${biblio.biblio_id}`}
-          className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-center block ${
+          className={`w-full py-3 rounded-xl text-[15px] font-bold transition-all duration-200 text-center block ${
             isAvailable
-              ? "bg-[#99BD4A]/10 text-[#99BD4A] hover:bg-[#99BD4A] hover:text-white border border-[#99BD4A]/30"
-              : "bg-slate-100 text-slate-500 hover:bg-slate-200 border border-slate-200"
+              ? "bg-[#f4f7f4] text-[#99BD4A] hover:bg-[#99BD4A] hover:text-white"
+              : "bg-[#f1f5f9] text-[#94a3b8] hover:bg-slate-200"
           }`}
         >
           {isAvailable ? "Pinjam Sekarang" : "Ingatkan Saya"}

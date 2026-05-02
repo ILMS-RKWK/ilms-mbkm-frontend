@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { Heart, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import berandaData from "@/json/beranda.json";
+import Link from "next/link";
 
 interface RecommendedBook {
   id: number;
@@ -17,7 +18,7 @@ function BookCard({ book }: { book: RecommendedBook }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   return (
-    <div className="flex-shrink-0 w-[180px] group cursor-pointer">
+    <Link href={`/detail-katalog/${book.id}?from=beranda`} className="flex-shrink-0 w-[180px] group cursor-pointer block">
       {/* Cover */}
       <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div
@@ -72,7 +73,7 @@ function BookCard({ book }: { book: RecommendedBook }) {
         </h3>
         <p className="text-xs text-slate-400 mt-0.5 truncate">{book.author}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

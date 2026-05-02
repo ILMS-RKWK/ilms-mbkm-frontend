@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight, ChevronLeft, Star, Calendar, Clock, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { StatusModal } from "@/components/ui/status-modal";
 
 interface ApiBook {
   biblio_id: string | number;
@@ -63,9 +64,11 @@ const ddcCategories = [
   { code: "900", label: "Sejarah & Geografi" },
 ];
 
-export default function DetailKatalogPage() {
+function DetailKatalogContent() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const id = params?.id as string;
+  const isFromBeranda = searchParams?.get("from") === "beranda";
 
   const [book, setBook] = useState<MappedBook | null>(null);
   const [similarBooks, setSimilarBooks] = useState<SimilarBook[]>([]);
@@ -181,13 +184,27 @@ export default function DetailKatalogPage() {
       <div className="max-w-[1200px] mx-auto px-4 md:px-8 lg:px-16 pb-20">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-[14px] text-[#6B7280] mt-8 mb-4">
-          <Link href="/katalog" className="hover:text-[#99BD4A] transition-colors">
-            Katalog
-          </Link>
-          <ChevronRight className="w-4 h-4 text-slate-300" />
-          <span className="hover:text-[#99BD4A] transition-colors cursor-pointer">{categoryName}</span>
-          <ChevronRight className="w-4 h-4 text-slate-300" />
-          <span className="font-bold text-[#111827]">Detail Buku</span>
+          {isFromBeranda ? (
+            <>
+              <Link href="/" className="hover:text-[#99BD4A] transition-colors">
+                Beranda
+              </Link>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+              <span className="font-bold text-[#111827]">Detail Buku</span>
+            </>
+          ) : (
+            <>
+              <Link href="/katalog" className="hover:text-[#99BD4A] transition-colors">
+                Katalog
+              </Link>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+              <Link href={`/katalog?category=${book.ddc}`} className="hover:text-[#99BD4A] transition-colors">
+                {categoryName}
+              </Link>
+              <ChevronRight className="w-4 h-4 text-slate-300" />
+              <span className="font-bold text-[#111827]">Detail Buku</span>
+            </>
+          )}
         </nav>
 
         {/* Hero Section */}
@@ -436,7 +453,7 @@ export default function DetailKatalogPage() {
                           min="1"
                           value={customDuration}
                           onChange={(e) => setCustomDuration(Number(e.target.value) || 1)}
-                          className="border border-[#E5E7EB] rounded-xl px-4 py-2.5 w-full text-[14px] font-bold text-[#0F172A] outline-none focus:border-[#99BD4A] transition-colors" 
+                          className="border border-[#E5E7EB] rounded-xl px-4 py-2.5 w-full text-[14px] font-bold text-[#0F172A] outline-none focus:border-[#99BD4A] transition-colors [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]" 
                           placeholder="Masukkan hari"
                         />
                         <span className="text-[13px] font-bold text-[#4B5563]">Hari</span>
@@ -499,35 +516,35 @@ export default function DetailKatalogPage() {
         )}
 
         {/* Modal Sukses Peminjaman */}
-        <Dialog open={isSuccessModalOpen} onOpenChange={setIsSuccessModalOpen}>
-          <DialogContent className="sm:max-w-[450px] p-8 overflow-hidden bg-white rounded-[24px] border-0 border-b-[12px] border-[#D5E4A6] shadow-2xl flex flex-col items-center text-center">
-            {/* Custom close button inside is hidden by default if we use DialogContent, but let's hide default cross and manage it if needed. Actually default cross is fine. */}
-            <div className="w-24 h-24 bg-[#F4F7F4] rounded-full flex items-center justify-center mb-4 mt-2">
-              <div className="w-14 h-14 bg-[#99BD4A] rounded-full flex items-center justify-center shadow-md">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-            
-            <h3 className="text-[22px] font-extrabold text-[#0F172A] mb-3 leading-tight">
-              Permintaan Peminjaman<br/>Terkirim!
-            </h3>
-            
-            <p className="text-[#6B7280] text-[15px] leading-relaxed mb-8 px-2">
-              Buku Anda sedang dalam proses verifikasi oleh admin. Silakan cek status peminjaman Anda secara berkala di halaman Riwayat.
-            </p>
-            
-            <Link 
-              href="/"
-              onClick={() => setIsSuccessModalOpen(false)}
-              className="w-full py-4 bg-[#99BD4A] hover:bg-[#87A840] text-white rounded-xl font-bold text-[16px] transition-colors shadow-sm flex items-center justify-center"
-            >
-              Kembali ke Beranda
-            </Link>
-          </DialogContent>
-        </Dialog>
+        {/* Modal Sukses Peminjaman */}
+        <StatusModal
+          isOpen={isSuccessModalOpen}
+          onOpenChange={setIsSuccessModalOpen}
+          status="success"
+          title={
+            <>
+              Permintaan Peminjaman<br />Terkirim!
+            </>
+          }
+          description="Buku Anda sedang dalam proses verifikasi oleh admin. Silakan cek status peminjaman Anda secara berkala di halaman Riwayat."
+          actionLabel="Kembali ke Beranda"
+          actionHref="/"
+          onAction={() => setIsSuccessModalOpen(false)}
+        />
       </div>
     </div>
+  );
+}
+
+export default function DetailKatalogPage() {
+  return (
+    <Suspense fallback={<div className="flex-1 w-full bg-white min-h-screen flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 border-4 border-[#99BD4A] border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[#6B7280] font-medium text-sm">Memuat informasi buku...</p>
+      </div>
+    </div>}>
+      <DetailKatalogContent />
+    </Suspense>
   );
 }

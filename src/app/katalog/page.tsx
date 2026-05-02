@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import KatalogSidebar from "@/components/katalog/katalog-sidebar";
 import KatalogHeader from "@/components/katalog/katalog-header";
 import KatalogView from "@/components/katalog/katalog-view";
 
-export default function KatalogPage() {
-  const [selectedCategory, setSelectedCategory] = useState("000");
+function KatalogContent() {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams?.get("category") || "000";
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const category = searchParams?.get("category");
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [searchParams]);
 
   return (
     <>
@@ -33,5 +43,13 @@ export default function KatalogPage() {
         <KatalogView selectedCategory={selectedCategory} />
       </div>
     </>
+  );
+}
+
+export default function KatalogPage() {
+  return (
+    <Suspense fallback={<div className="flex-1 min-h-screen bg-slate-50 flex items-center justify-center">Loading...</div>}>
+      <KatalogContent />
+    </Suspense>
   );
 }
