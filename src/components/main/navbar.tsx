@@ -17,7 +17,8 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const currentFrom = pathname === "/" ? "beranda" : pathname.split("/")[1] || "katalog";
+  const currentFrom =
+    pathname === "/" ? "beranda" : pathname.split("/")[1] || "katalog";
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -25,6 +26,7 @@ export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close mobile menu when pathname changes
   useEffect(() => {
@@ -34,10 +36,19 @@ export default function Navbar() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      const isOutsideDesktop =
+        dropdownRef.current && !dropdownRef.current.contains(target);
+      const isOutsideMobile =
+        mobileDropdownRef.current &&
+        !mobileDropdownRef.current.contains(target);
+
+      if (isOutsideDesktop && (!mobileDropdownRef.current || isOutsideMobile)) {
         setShowDropdown(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -61,7 +72,9 @@ export default function Navbar() {
     const fetchResults = async () => {
       setIsSearching(true);
       try {
-        const response = await fetch(`/api/slims?limit=5&title=${encodeURIComponent(debouncedQuery)}`);
+        const response = await fetch(
+          `/api/slims?limit=5&title=${encodeURIComponent(debouncedQuery)}`,
+        );
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data.data || []);
@@ -92,7 +105,7 @@ export default function Navbar() {
               <Menu className="w-5 h-5" />
             )}
           </button>
-          
+
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
             <Image
               src="/icons/icon-ilms-no-fill.png"
@@ -108,7 +121,10 @@ export default function Navbar() {
         </div>
 
         {/* Search Bar */}
-        <div className="hidden md:flex items-center mx-6 lg:mx-10 flex-1 max-w-md relative" ref={dropdownRef}>
+        <div
+          className="hidden md:flex items-center mx-6 lg:mx-10 flex-1 max-w-md relative"
+          ref={dropdownRef}
+        >
           <div className="relative w-full">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
@@ -128,16 +144,24 @@ export default function Navbar() {
           {showDropdown && searchQuery.trim() !== "" && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50 flex flex-col max-h-[400px]">
               <div className="px-4 py-3 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Hasil Pencarian</span>
-                {isSearching && <Loader2 className="w-3.5 h-3.5 text-[#99BD4A] animate-spin" />}
+                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  Hasil Pencarian
+                </span>
+                {isSearching && (
+                  <Loader2 className="w-3.5 h-3.5 text-[#99BD4A] animate-spin" />
+                )}
               </div>
 
               <div className="flex-1 overflow-y-auto p-2">
                 {!isSearching && searchResults.length === 0 ? (
                   <div className="py-8 px-4 text-center flex flex-col items-center">
                     <BookOpen className="w-8 h-8 text-slate-200 mb-2" />
-                    <p className="text-sm font-medium text-slate-500">Tidak ada buku yang ditemukan</p>
-                    <p className="text-xs text-slate-400 mt-1">Coba kata kunci lain</p>
+                    <p className="text-sm font-medium text-slate-500">
+                      Tidak ada buku yang ditemukan
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Coba kata kunci lain
+                    </p>
                   </div>
                 ) : (
                   <div className="flex flex-col gap-1">
@@ -151,7 +175,12 @@ export default function Navbar() {
                         <div className="w-10 h-14 bg-slate-100 rounded-lg shrink-0 overflow-hidden relative">
                           {book.image ? (
                             <Image
-                              src={book.image.startsWith("http") || book.image.startsWith("/") ? book.image : `https://slims.web.id/web/${book.image}`}
+                              src={
+                                book.image.startsWith("http") ||
+                                book.image.startsWith("/")
+                                  ? book.image
+                                  : `https://slims.web.id/web/${book.image}`
+                              }
                               alt={book.title}
                               fill
                               className="object-cover"
@@ -174,10 +203,17 @@ export default function Navbar() {
                             <span className="text-[10px] font-semibold px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded uppercase">
                               {book.classification || "Umum"}
                             </span>
-                            {book.availability?.toLowerCase() === "available" || book.availability === "1" || book.availability === "Tersedia" || !book.availability ? (
-                              <span className="text-[10px] font-semibold text-[#99BD4A]">Tersedia</span>
+                            {book.availability?.toLowerCase() === "available" ||
+                            book.availability === "1" ||
+                            book.availability === "Tersedia" ||
+                            !book.availability ? (
+                              <span className="text-[10px] font-semibold text-[#99BD4A]">
+                                Tersedia
+                              </span>
                             ) : (
-                              <span className="text-[10px] font-semibold text-slate-400">Dipinjam</span>
+                              <span className="text-[10px] font-semibold text-slate-400">
+                                Dipinjam
+                              </span>
                             )}
                           </div>
                         </div>
@@ -207,7 +243,10 @@ export default function Navbar() {
         {/* Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => {
-            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
@@ -237,7 +276,10 @@ export default function Navbar() {
           </Link>
 
           {/* User Avatar */}
-          <Link href="/profil" className="relative w-9 h-9 rounded-full bg-gradient-to-br from-[#B4D568] to-[#99BD4A] flex items-center justify-center ring-2 ring-[#99BD4A]/20 hover:ring-[#99BD4A]/40 transition-all duration-200 overflow-hidden">
+          <Link
+            href="/profil"
+            className="relative w-9 h-9 rounded-full bg-gradient-to-br from-[#B4D568] to-[#99BD4A] flex items-center justify-center ring-2 ring-[#99BD4A]/20 hover:ring-[#99BD4A]/40 transition-all duration-200 overflow-hidden"
+          >
             <svg
               width="18"
               height="18"
@@ -258,7 +300,10 @@ export default function Navbar() {
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden absolute top-16 left-0 right-0 bg-white border-b border-slate-100 shadow-lg py-4 px-6 flex flex-col gap-4">
-          <div className="relative w-full md:hidden mb-2">
+          <div
+            className="relative w-full md:hidden mb-2"
+            ref={mobileDropdownRef}
+          >
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
@@ -271,20 +316,26 @@ export default function Navbar() {
               onFocus={() => setShowDropdown(true)}
               className="w-full pl-10 pr-4 py-2.5 bg-[#f1f5f9] rounded-xl text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#99BD4A]/30 focus:bg-white transition-all duration-200"
             />
-            
+
             {/* Mobile Search Results */}
             {showDropdown && searchQuery.trim() !== "" && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50 flex flex-col max-h-[300px]">
                 <div className="px-4 py-3 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Hasil Pencarian</span>
-                  {isSearching && <Loader2 className="w-3.5 h-3.5 text-[#99BD4A] animate-spin" />}
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Hasil Pencarian
+                  </span>
+                  {isSearching && (
+                    <Loader2 className="w-3.5 h-3.5 text-[#99BD4A] animate-spin" />
+                  )}
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-2">
                   {!isSearching && searchResults.length === 0 ? (
                     <div className="py-6 px-4 text-center flex flex-col items-center">
                       <BookOpen className="w-8 h-8 text-slate-200 mb-2" />
-                      <p className="text-sm font-medium text-slate-500">Tidak ada hasil</p>
+                      <p className="text-sm font-medium text-slate-500">
+                        Tidak ada hasil
+                      </p>
                     </div>
                   ) : (
                     <div className="flex flex-col gap-1">
@@ -301,7 +352,12 @@ export default function Navbar() {
                           <div className="w-8 h-12 bg-slate-100 rounded-md shrink-0 overflow-hidden relative">
                             {book.image ? (
                               <Image
-                                src={book.image.startsWith("http") || book.image.startsWith("/") ? book.image : `https://slims.web.id/web/${book.image}`}
+                                src={
+                                  book.image.startsWith("http") ||
+                                  book.image.startsWith("/")
+                                    ? book.image
+                                    : `https://slims.web.id/web/${book.image}`
+                                }
                                 alt={book.title}
                                 fill
                                 className="object-cover"
@@ -344,10 +400,13 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          
+
           <nav className="flex flex-col gap-1">
             {navLinks.map((link) => {
-              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
               return (
                 <Link
                   key={link.href}
