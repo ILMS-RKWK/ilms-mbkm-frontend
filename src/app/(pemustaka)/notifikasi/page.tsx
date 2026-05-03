@@ -43,21 +43,21 @@ export default function NotifikasiPage() {
     <div className="flex flex-col w-full min-h-screen bg-[#F8F9FA]">
       <div className="max-w-[1000px] mx-auto w-full px-6 py-10">
         {/* Header */}
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
             <p className="text-[#64748b] text-[12px] font-bold tracking-[0.15em] uppercase mb-1">
               Pusat Informasi
             </p>
-            <h1 className="text-[32px] md:text-[38px] font-extrabold text-[#0F172A] tracking-tight leading-none">
+            <h1 className="text-[28px] sm:text-[32px] md:text-[38px] font-extrabold text-[#0F172A] tracking-tight leading-none">
               Notifikasi
             </h1>
           </div>
           {unreadCount > 0 && (
             <button
               onClick={handleMarkAllRead}
-              className="px-5 py-2.5 border border-slate-200 hover:border-slate-300 bg-white rounded-xl text-[13px] font-bold text-[#334155] hover:bg-slate-50 transition-colors shadow-sm"
+              className="w-full sm:w-auto px-5 py-2.5 border border-slate-200 hover:border-slate-300 bg-white rounded-xl text-[13px] font-bold text-[#334155] hover:bg-slate-50 transition-colors shadow-sm"
             >
-              Tandai Semua Sudah Dibaca
+              Tandai Semua Dibaca
             </button>
           )}
         </div>
@@ -70,38 +70,40 @@ export default function NotifikasiPage() {
             return (
               <div key={notif.id}>
                 <div
-                  className={`flex items-center gap-5 px-7 py-6 transition-colors ${
+                  className={`flex items-start sm:items-center gap-4 sm:gap-5 px-5 sm:px-7 py-5 sm:py-6 transition-colors ${
                     notif.isRead ? "opacity-60" : ""
                   }`}
                 >
                   {/* Icon Circle */}
                   <div
-                    className={`w-11 h-11 rounded-full ${config.bgColor} flex items-center justify-center shrink-0`}
+                    className={`w-10 h-10 sm:w-11 sm:h-11 mt-1 sm:mt-0 rounded-full ${config.bgColor} flex items-center justify-center shrink-0`}
                   >
                     {config.icon}
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <span
-                      className={`text-[11px] font-extrabold tracking-[0.12em] uppercase ${config.labelColor} block mb-1`}
-                    >
-                      {config.label}
-                    </span>
-                    <p className="text-[15px] font-bold text-[#1e293b] leading-snug">
-                      {notif.message}
-                    </p>
-                  </div>
+                  {/* Content & Time */}
+                  <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <span
+                        className={`text-[10px] sm:text-[11px] font-extrabold tracking-[0.12em] uppercase ${config.labelColor} block mb-1`}
+                      >
+                        {config.label}
+                      </span>
+                      <p className="text-[14px] sm:text-[15px] font-bold text-[#1e293b] leading-snug">
+                        {notif.message}
+                      </p>
+                    </div>
 
-                  {/* Time */}
-                  <span className="text-[#94a3b8] text-[13px] font-medium whitespace-nowrap shrink-0">
-                    {notif.time}
-                  </span>
+                    {/* Time */}
+                    <span className="text-[#94a3b8] text-[12px] sm:text-[13px] font-medium whitespace-nowrap shrink-0">
+                      {notif.time}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Divider between items */}
                 {index < notifications.length - 1 && (
-                  <div className="mx-7 border-b border-slate-100" />
+                  <div className="mx-5 sm:mx-7 border-b border-slate-100" />
                 )}
               </div>
             );

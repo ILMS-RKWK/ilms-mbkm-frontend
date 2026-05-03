@@ -91,12 +91,12 @@ export default function RekomendasiBuku() {
   return (
     <section>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <h2 className="text-xl font-bold text-[#1e293b]">
             Rekomendasi Cerdas Untukmu
           </h2>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#99BD4A]/10 text-[#99BD4A] text-xs font-bold">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#99BD4A]/10 text-[#99BD4A] text-xs font-bold whitespace-nowrap">
             <Sparkles className="w-3.5 h-3.5" />
             AI POWERED
           </span>

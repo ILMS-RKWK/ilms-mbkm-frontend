@@ -24,7 +24,7 @@ function KatalogContent() {
       {/* Overlay for mobile sidebar */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-900/50 z-50 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}

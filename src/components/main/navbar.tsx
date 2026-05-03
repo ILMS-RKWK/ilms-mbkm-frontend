@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, Bell, Loader2, BookOpen } from "lucide-react";
+import { Search, Bell, Loader2, BookOpen, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import type { SLiMSBiblio } from "@/components/katalog/koleksi-card";
 
@@ -23,7 +23,13 @@ export default function Navbar() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState<SLiMSBiblio[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile menu when pathname changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -73,19 +79,33 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 lg:px-10 h-16">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <Image
-            src="/icons/icon-ilms-no-fill.png"
-            alt="Logo Wadas Kelir"
-            width={28}
-            height={28}
-            className="object-contain"
-          />
-          <span className="font-extrabold text-[#1e293b] text-lg tracking-tight">
-            Wadas Kelir
-          </span>
-        </Link>
+        {/* Left Section: Mobile Menu + Logo */}
+        <div className="flex items-center gap-3">
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 rounded-lg transition-colors"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
+          
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <Image
+              src="/icons/icon-ilms-no-fill.png"
+              alt="Logo Wadas Kelir"
+              width={28}
+              height={28}
+              className="object-contain"
+            />
+            <span className="font-extrabold text-[#1e293b] text-lg tracking-tight">
+              Wadas Kelir
+            </span>
+          </Link>
+        </div>
 
         {/* Search Bar */}
         <div className="hidden md:flex items-center mx-6 lg:mx-10 flex-1 max-w-md relative" ref={dropdownRef}>
@@ -234,6 +254,117 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden absolute top-16 left-0 right-0 bg-white border-b border-slate-100 shadow-lg py-4 px-6 flex flex-col gap-4">
+          <div className="relative w-full md:hidden mb-2">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Cari buku, penulis, atau genre..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowDropdown(true);
+              }}
+              onFocus={() => setShowDropdown(true)}
+              className="w-full pl-10 pr-4 py-2.5 bg-[#f1f5f9] rounded-xl text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#99BD4A]/30 focus:bg-white transition-all duration-200"
+            />
+            
+            {/* Mobile Search Results */}
+            {showDropdown && searchQuery.trim() !== "" && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50 flex flex-col max-h-[300px]">
+                <div className="px-4 py-3 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Hasil Pencarian</span>
+                  {isSearching && <Loader2 className="w-3.5 h-3.5 text-[#99BD4A] animate-spin" />}
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-2">
+                  {!isSearching && searchResults.length === 0 ? (
+                    <div className="py-6 px-4 text-center flex flex-col items-center">
+                      <BookOpen className="w-8 h-8 text-slate-200 mb-2" />
+                      <p className="text-sm font-medium text-slate-500">Tidak ada hasil</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-1">
+                      {searchResults.map((book) => (
+                        <Link
+                          key={book.biblio_id}
+                          href={`/detail-katalog/${book.biblio_id}?from=${currentFrom}`}
+                          onClick={() => {
+                            setShowDropdown(false);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
+                        >
+                          <div className="w-8 h-12 bg-slate-100 rounded-md shrink-0 overflow-hidden relative">
+                            {book.image ? (
+                              <Image
+                                src={book.image.startsWith("http") || book.image.startsWith("/") ? book.image : `https://slims.web.id/web/${book.image}`}
+                                alt={book.title}
+                                fill
+                                className="object-cover"
+                                unoptimized
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-[#f4f7ee]">
+                                <BookOpen className="w-3 h-3 text-[#99BD4A]/50" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0 pt-0.5">
+                            <h4 className="text-[12px] font-bold text-slate-800 line-clamp-1 group-hover:text-[#99BD4A] transition-colors">
+                              {book.title}
+                            </h4>
+                            <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                              {book.author}
+                            </p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {searchResults.length > 0 && (
+                  <div className="p-2 border-t border-slate-50 bg-white">
+                    <button
+                      onClick={() => {
+                        setShowDropdown(false);
+                        setIsMobileMenuOpen(false);
+                        router.push(`/katalog`);
+                      }}
+                      className="w-full py-2 text-xs font-bold text-[#99BD4A] hover:bg-[#f4f7ee] rounded-lg transition-colors text-center"
+                    >
+                      Lihat Semua
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          
+          <nav className="flex flex-col gap-1">
+            {navLinks.map((link) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                    isActive
+                      ? "text-[#99BD4A] bg-[#99BD4A]/8"
+                      : "text-[#475569] hover:text-[#99BD4A] hover:bg-slate-50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

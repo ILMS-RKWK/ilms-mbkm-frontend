@@ -74,13 +74,13 @@ export default function PinjamanPage() {
       <div className="max-w-[1000px] mx-auto px-6 py-10">
         
         {/* Header Section */}
-        <div className="mb-10">
-          <h1 className="text-[32px] font-extrabold text-[#1e293b] mb-2">Riwayat Peminjaman Saya</h1>
-          <p className="text-[#64748b] text-[16px]">Pantau status peminjaman, batas waktu, dan pengembalian buku Anda di sini.</p>
+        <div className="mb-8 sm:mb-10">
+          <h1 className="text-[28px] sm:text-[32px] font-extrabold text-[#1e293b] mb-2 leading-tight">Riwayat Peminjaman Saya</h1>
+          <p className="text-[#64748b] text-[15px] sm:text-[16px]">Pantau status peminjaman, batas waktu, dan pengembalian buku Anda di sini.</p>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-8 border-b border-slate-200 mb-8 overflow-x-auto no-scrollbar">
+        <div className="flex gap-5 sm:gap-8 border-b border-slate-200 mb-6 sm:mb-8 overflow-x-auto no-scrollbar pb-1">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -100,12 +100,12 @@ export default function PinjamanPage() {
         </div>
 
         {/* List of Loans */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {filteredLoans.map((loan) => (
-            <div key={loan.id} className="bg-white rounded-[24px] border border-slate-100 p-6 flex flex-col sm:flex-row gap-6 shadow-sm hover:shadow-md transition-shadow">
+            <div key={loan.id} className="bg-white rounded-[20px] sm:rounded-[24px] border border-slate-100 p-5 sm:p-6 flex flex-col sm:flex-row gap-5 sm:gap-6 shadow-sm hover:shadow-md transition-shadow">
               
               {/* Book Cover */}
-              <div className="w-[130px] h-[175px] shrink-0 rounded-xl overflow-hidden bg-slate-100 relative shadow-sm border border-slate-100">
+              <div className="w-[140px] h-[190px] sm:w-[130px] sm:h-[175px] shrink-0 rounded-xl overflow-hidden bg-slate-100 relative shadow-sm border border-slate-100 mx-auto sm:mx-0">
                  {/* Fallback */}
                  <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
                     <span className="text-slate-500 font-bold text-center px-2 text-xs">{loan.title}</span>
@@ -126,7 +126,7 @@ export default function PinjamanPage() {
 
               {/* Details Content */}
               <div className="flex-1 flex flex-col pt-1">
-                <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-4">
                   {/* Title & Author & Badge */}
                   <div>
                     {/* Badge */}
@@ -148,19 +148,19 @@ export default function PinjamanPage() {
                       )}
                     </div>
                     
-                    <h3 className="font-extrabold text-[#1e293b] text-[22px] leading-tight mb-1">
+                    <h3 className="font-extrabold text-[#1e293b] text-[18px] sm:text-[22px] leading-tight mb-1">
                       {loan.title}
                     </h3>
-                    <p className="text-[#64748b] text-[15px] font-medium">
+                    <p className="text-[#64748b] text-[14px] sm:text-[15px] font-medium">
                       {loan.author}
                     </p>
                   </div>
 
                   {/* Right side info (Time left for SEDANG_DIPINJAM) */}
                   {loan.status === "SEDANG_DIPINJAM" && loan.daysLeft && (
-                    <div className="flex items-center gap-1.5 text-[#f97316] bg-[#fff7ed] px-3 py-1.5 rounded-lg shrink-0">
+                    <div className="flex w-fit items-center gap-1.5 text-[#f97316] bg-[#fff7ed] px-3 py-1.5 rounded-lg shrink-0">
                       <Clock className="w-4 h-4" />
-                      <span className="text-[13px] font-bold">Sisa {loan.daysLeft} Hari</span>
+                      <span className="text-[12px] sm:text-[13px] font-bold">Sisa {loan.daysLeft} Hari</span>
                     </div>
                   )}
                 </div>
@@ -194,21 +194,21 @@ export default function PinjamanPage() {
                 </div>
 
                 {/* Actions Button */}
-                <div className="mt-auto flex items-center">
+                <div className="mt-auto flex items-center pt-2">
                   {loan.status === "SEDANG_DIPINJAM" && (
-                    <button className="bg-[#99BD4A] hover:bg-[#8aac3d] text-white px-5 py-2.5 rounded-[10px] font-bold text-[14px] transition-colors flex items-center gap-2 shadow-sm">
-                      <RotateCcw className="w-4 h-4" />
+                    <button className="w-full sm:w-auto bg-[#99BD4A] hover:bg-[#8aac3d] text-white px-5 py-2.5 rounded-[10px] font-bold text-[13px] sm:text-[14px] transition-colors flex justify-center items-center gap-2 shadow-sm">
+                      <RotateCcw className="w-4 h-4 shrink-0" />
                       Ajukan Perpanjangan
                     </button>
                   )}
                   {loan.status === "MENUNGGU_PERSETUJUAN" && (
-                    <button className="bg-white border border-slate-200 hover:bg-slate-50 text-[#64748b] px-5 py-2.5 rounded-[10px] font-bold text-[14px] transition-colors shadow-sm">
+                    <button className="w-full sm:w-auto bg-white border border-slate-200 hover:bg-slate-50 text-[#64748b] px-5 py-2.5 rounded-[10px] font-bold text-[13px] sm:text-[14px] transition-colors shadow-sm text-center">
                       Batalkan Pesanan
                     </button>
                   )}
                   {loan.status === "SELESAI" && (
-                    <button className="bg-[#f4f7f4] hover:bg-[#eaf1ea] text-[#8ca846] px-5 py-2.5 rounded-[10px] font-bold text-[14px] transition-colors flex items-center gap-2">
-                      <Star className="w-4 h-4" />
+                    <button className="w-full sm:w-auto bg-[#f4f7f4] hover:bg-[#eaf1ea] text-[#8ca846] px-5 py-2.5 rounded-[10px] font-bold text-[13px] sm:text-[14px] transition-colors flex justify-center items-center gap-2">
+                      <Star className="w-4 h-4 shrink-0" />
                       Beri Ulasan
                     </button>
                   )}

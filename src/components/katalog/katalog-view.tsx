@@ -121,7 +121,7 @@ export default function KatalogView({ selectedCategory }: KatalogViewProps) {
   ];
 
   return (
-    <div className="flex-1 flex flex-col gap-6 py-8 px-8 lg:px-10 overflow-y-auto">
+    <div className="flex-1 flex flex-col gap-6 py-6 md:py-8 px-4 md:px-8 lg:px-10 overflow-y-auto">
       {/* Search Bar */}
       <div className="relative max-w-6xl mx-auto w-full">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />

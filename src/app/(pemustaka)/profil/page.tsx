@@ -74,8 +74,8 @@ export default function ProfilPage() {
     <div className="flex flex-col w-full min-h-screen bg-[#F8F9FA]">
       <div className="max-w-[1100px] mx-auto w-full px-6 py-10">
         {/* Profile Header Card */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 mb-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8 mb-6 sm:mb-8">
+          <div className="flex flex-col md:flex-row items-center md:items-center gap-6">
             {/* Avatar */}
             <div className="relative w-[120px] h-[120px] shrink-0">
               <div className="w-full h-full rounded-full bg-gradient-to-br from-[#B4D568] to-[#99BD4A] overflow-hidden ring-4 ring-white shadow-lg">
@@ -145,15 +145,15 @@ export default function ProfilPage() {
             </div>
 
             {/* Name & Meta */}
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
               <h1 className="text-[28px] md:text-[32px] font-extrabold text-[#0F172A] tracking-tight mb-1">
                 {profile.name}
               </h1>
-              <p className="text-[#64748b] text-[14px] font-medium flex items-center gap-2 mb-3">
+              <p className="text-[#64748b] text-[14px] font-medium flex items-center justify-center md:justify-start gap-2 mb-3">
                 <CalendarDays className="w-4 h-4" />
                 ID Anggota: {profile.memberId}
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center md:justify-start gap-3">
                 <span className="text-[#99BD4A] text-[13px] font-bold">
                   {profile.status}
                 </span>
@@ -166,7 +166,7 @@ export default function ProfilPage() {
             {/* Edit Button */}
             <button
               onClick={handleOpenEdit}
-              className="flex items-center gap-2 bg-[#99BD4A] hover:bg-[#87A840] text-white px-6 py-3 rounded-xl font-bold text-[14px] transition-colors shadow-sm"
+              className="flex items-center justify-center gap-2 bg-[#99BD4A] hover:bg-[#87A840] text-white px-6 py-3 rounded-xl font-bold text-[14px] transition-colors shadow-sm w-full md:w-auto"
             >
               <Pencil className="w-4 h-4" />
               Edit Profil
@@ -177,7 +177,7 @@ export default function ProfilPage() {
         {/* Main Grid: 3 columns */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Left Column — sticky */}
-          <div className="lg:col-span-1 flex flex-col gap-6 sticky top-24 h-fit">
+          <div className="lg:col-span-1 flex flex-col gap-6 lg:sticky lg:top-24 h-fit z-10">
             {/* Informasi Pribadi */}
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
               <div className="flex items-center gap-2 mb-6">
@@ -321,7 +321,7 @@ export default function ProfilPage() {
             </div>
 
             {/* Aktivitas Terbaru */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5 text-[#99BD4A]" />
@@ -341,10 +341,10 @@ export default function ProfilPage() {
                 {profile.aktivitasTerbaru.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-[#F8F9FA] border border-slate-50"
+                    className="flex items-start sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-[#F8F9FA] border border-slate-50"
                   >
                     {/* Book Thumbnail */}
-                    <div className="relative w-14 h-[70px] rounded-lg bg-gradient-to-br from-[#d4c5a9] to-[#b8a88a] shrink-0 overflow-hidden shadow-sm">
+                    <div className="relative w-[50px] h-[70px] sm:w-14 sm:h-[70px] rounded-lg bg-gradient-to-br from-[#d4c5a9] to-[#b8a88a] shrink-0 overflow-hidden shadow-sm">
                       <div className="absolute inset-0 flex items-center justify-center">
                         <BookOpen className="w-5 h-5 text-white/60" />
                       </div>
@@ -360,22 +360,22 @@ export default function ProfilPage() {
                     </div>
 
                     {/* Book Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[15px] font-bold text-[#1e293b] leading-snug">
+                    <div className="flex-1 min-w-0 pt-0.5 sm:pt-0">
+                      <p className="text-[14px] sm:text-[15px] font-bold text-[#1e293b] leading-snug line-clamp-2 sm:line-clamp-1">
                         {item.title}
                       </p>
-                      <p className="text-[#64748b] text-[13px] font-medium">
+                      <p className="text-[#64748b] text-[12px] sm:text-[13px] font-medium truncate">
                         {item.author}
                       </p>
-                      <div className="flex items-center gap-2 mt-1.5">
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-1.5">
                         <span
-                          className="text-[11px] font-bold text-white px-2.5 py-0.5 rounded-md"
+                          className="text-[10px] sm:text-[11px] font-bold text-white px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-md whitespace-nowrap"
                           style={{ backgroundColor: item.statusColor }}
                         >
                           {item.status}
                         </span>
-                        <span className="text-[#94a3b8] text-[11px] font-medium">
-                          {item.time}
+                        <span className="text-[#94a3b8] text-[11px] font-medium shrink-0">
+                          • {item.time}
                         </span>
                       </div>
                     </div>
@@ -389,13 +389,13 @@ export default function ProfilPage() {
 
       {/* Edit Profile Modal */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="sm:max-w-[620px] p-0 overflow-visible bg-white rounded-[20px] border-0 shadow-2xl">
+        <DialogContent className="w-[95vw] sm:max-w-[620px] max-h-[90vh] overflow-y-auto p-0 bg-white rounded-[20px] border-0 shadow-2xl">
           {/* Header */}
-          <div className="px-8 pt-8 pb-0">
-            <h2 className="text-[22px] font-extrabold text-[#0F172A]">
+          <div className="px-5 sm:px-8 pt-6 sm:pt-8 pb-4 sticky top-0 bg-white z-40 border-b border-slate-100">
+            <h2 className="text-[20px] sm:text-[22px] font-extrabold text-[#0F172A]">
               Edit Profil Peminjam
             </h2>
-            <p className="text-[#64748b] text-[14px] font-medium mt-1">
+            <p className="text-[#64748b] text-[13px] sm:text-[14px] font-medium mt-1">
               Perbarui informasi akun Anda untuk layanan perpustakaan
             </p>
           </div>
@@ -483,7 +483,7 @@ export default function ProfilPage() {
           </div>
 
           {/* Form */}
-          <div className="px-8 pb-2 flex flex-col gap-5">
+          <div className="px-5 sm:px-8 pb-4 flex flex-col gap-4 sm:gap-5">
             {/* Row 1: Nama & Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -569,18 +569,18 @@ export default function ProfilPage() {
           </div>
 
           {/* Footer */}
-          <div className="px-8 py-6 flex items-center justify-end gap-4">
+          <div className="px-5 sm:px-8 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-end gap-3 sm:gap-4 sticky bottom-0 bg-white z-40 border-t border-slate-100">
             <button
               onClick={() => setIsEditOpen(false)}
-              className="px-8 py-3 border border-slate-200 text-[#334155] rounded-xl font-bold text-[14px] hover:bg-slate-50 transition-colors"
+              className="w-full sm:w-auto px-8 py-3 sm:py-3 border border-slate-200 text-[#334155] rounded-xl font-bold text-[14px] hover:bg-slate-50 transition-colors order-2 sm:order-1"
             >
               Batal
             </button>
             <button
               onClick={handleSaveProfile}
-              className="flex items-center gap-2 px-8 py-3 bg-[#99BD4A] hover:bg-[#87A840] text-white rounded-xl font-bold text-[14px] transition-colors shadow-sm"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 sm:py-3 bg-[#99BD4A] hover:bg-[#87A840] text-white rounded-xl font-bold text-[14px] transition-colors shadow-sm order-1 sm:order-2"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-4 h-4 shrink-0" />
               Simpan Perubahan
             </button>
           </div>

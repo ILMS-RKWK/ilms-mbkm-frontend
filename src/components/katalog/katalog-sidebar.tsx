@@ -42,7 +42,7 @@ export default function KatalogSidebar({
 }: KatalogSidebarProps) {
   return (
     <aside 
-      className={`fixed lg:sticky top-0 left-0 z-50 w-[280px] h-screen bg-white border-r border-slate-100 flex flex-col shrink-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
+      className={`fixed lg:sticky top-0 left-0 z-[60] lg:z-40 w-[280px] h-screen bg-white border-r border-slate-100 flex flex-col shrink-0 overflow-y-auto transition-transform duration-300 ease-in-out ${
         isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       }`}
     >

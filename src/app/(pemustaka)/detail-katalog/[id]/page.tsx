@@ -388,22 +388,22 @@ function DetailKatalogContent() {
         {/* Modal Konfirmasi Peminjaman */}
         {book && (
           <Dialog open={isBorrowModalOpen} onOpenChange={setIsBorrowModalOpen}>
-            <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden bg-white rounded-[24px] border-none shadow-xl">
-              <DialogHeader className="p-6 pb-4 border-b border-slate-100 flex flex-row items-center justify-between space-y-0">
-                <DialogTitle className="text-[20px] font-extrabold text-[#0F172A]">Konfirmasi Peminjaman Buku</DialogTitle>
+            <DialogContent className="w-[95vw] max-w-[600px] max-h-[90vh] overflow-y-auto p-0 bg-white rounded-[24px] border-none shadow-xl">
+              <DialogHeader className="p-5 sm:p-6 pb-4 border-b border-slate-100 flex flex-row items-center justify-between space-y-0 sticky top-0 bg-white z-10">
+                <DialogTitle className="text-[18px] sm:text-[20px] font-extrabold text-[#0F172A]">Konfirmasi Peminjaman Buku</DialogTitle>
               </DialogHeader>
               
-              <div className="p-6 flex flex-col gap-6">
+              <div className="p-5 sm:p-6 flex flex-col gap-5 sm:gap-6">
                 {/* Card Buku di Dalam Modal */}
-                <div className="bg-[#FCFDFC] border border-[#E5E7EB] rounded-[16px] p-4 flex gap-5">
-                  <div className="w-[80px] h-[110px] shrink-0 rounded-lg overflow-hidden relative shadow-sm border border-slate-100">
+                <div className="bg-[#FCFDFC] border border-[#E5E7EB] rounded-[16px] p-3 sm:p-4 flex gap-3 sm:gap-5">
+                  <div className="w-[70px] h-[100px] sm:w-[80px] sm:h-[110px] shrink-0 rounded-lg overflow-hidden relative shadow-sm border border-slate-100">
                     {book.image ? (
                       <Image src={book.image} alt={book.title} fill className="object-cover" unoptimized />
                     ) : (
                       <div className="w-full h-full bg-slate-200"></div>
                     )}
                   </div>
-                  <div className="flex flex-col justify-center">
+                  <div className="flex flex-col justify-center min-w-0">
                     <span className="text-[11px] font-bold text-[#9CA3AF] tracking-widest uppercase mb-1">Detail Buku</span>
                     <h4 className="font-extrabold text-[#0F172A] text-[18px] leading-snug mb-1 line-clamp-1">{book.title}</h4>
                     <p className="text-[#6B7280] text-[14px] mb-3">{book.author}</p>
@@ -420,7 +420,7 @@ function DetailKatalogContent() {
                 </div>
 
                 {/* Form Input */}
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex-1 flex flex-col gap-2">
                     <label className="text-[13px] font-bold text-[#0F172A]">Tanggal Mulai Pinjam</label>
                     <div className="border border-[#E5E7EB] rounded-xl px-4 py-3.5 bg-[#F9FAFB] flex items-center gap-3">
@@ -485,10 +485,10 @@ function DetailKatalogContent() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-4 pt-2">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
                   <button 
                     onClick={() => setIsBorrowModalOpen(false)}
-                    className="flex-1 py-4 rounded-xl border border-slate-200 text-[#4B5563] font-bold text-[15px] hover:bg-slate-50 transition-colors"
+                    className="w-full sm:flex-1 py-3.5 sm:py-4 rounded-xl border border-slate-200 text-[#4B5563] font-bold text-[14px] sm:text-[15px] hover:bg-slate-50 transition-colors order-2 sm:order-1"
                   >
                     Batalkan
                   </button>
@@ -502,7 +502,7 @@ function DetailKatalogContent() {
                         setIsSuccessModalOpen(true);
                       }, 200);
                     }}
-                    className={`flex-1 py-4 rounded-xl text-white font-bold text-[15px] flex items-center justify-center gap-2 transition-all ${
+                    className={`w-full sm:flex-1 py-3.5 sm:py-4 rounded-xl text-white font-bold text-[14px] sm:text-[15px] flex items-center justify-center gap-2 transition-all order-1 sm:order-2 ${
                       isAgreed ? "bg-[#99BD4A] hover:bg-[#87A840] shadow-sm hover:-translate-y-0.5" : "bg-[#A3C757]/50 cursor-not-allowed"
                     }`}
                   >
