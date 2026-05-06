@@ -57,11 +57,11 @@ export interface RegisterPayload {
   email: string;
   password: string;
   password_confirmation: string;
-  nik_nisn: string;
-  id_type: string;
-  phone: string;
-  address: string;
-  birth_date: string;
+  nik_nisn?: string;
+  id_type?: string;
+  phone?: string;
+  address?: string;
+  birth_date?: string;
 }
 
 export interface LoginPayload {

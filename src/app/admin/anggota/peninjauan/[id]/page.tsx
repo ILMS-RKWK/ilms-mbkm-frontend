@@ -38,7 +38,7 @@ export default function DetailPeninjauanPage({ params }: { params: { id: string 
               <div>
                 <h2 className="text-xl font-bold text-slate-900">Aditya Pratama</h2>
                 <div className="text-xs font-bold text-[#64748b] bg-[#f1f5f9] px-2 py-1 rounded-md w-fit mt-1">
-                  ID: REG-99201
+                  ID: REG-{params.id}
                 </div>
               </div>
             </div>
