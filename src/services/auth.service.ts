@@ -1,11 +1,11 @@
 import { apiSlice } from "./base-query";
-import { RegisterPayload, ForgotPasswordPayload, User } from "@/types/user";
+import { RegisterPayload, ForgotPasswordPayload, User, LoginPayload } from "@/types/user";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<{ data: { user: User; token: string } }, LoginPayload>({
       query: (credentials) => ({
-        url: "/login",
+        url: "/auth/login",
         method: "POST",
         body: credentials,
       }),
@@ -13,14 +13,14 @@ export const authApi = apiSlice.injectEndpoints({
 
     logout: builder.mutation<void, void>({
       query: () => ({
-        url: "/logout",
+        url: "/auth/logout",
         method: "POST",
       }),
     }),
 
-    register: builder.mutation<User, RegisterPayload>({
+    register: builder.mutation<{ data: { user: User } }, RegisterPayload>({
       query: (body) => ({
-        url: "/register",
+        url: "/auth/register",
         method: "POST",
         body,
       }),

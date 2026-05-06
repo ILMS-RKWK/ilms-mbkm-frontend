@@ -255,14 +255,13 @@ export default function KontakPage() {
           </div>
           <div className="w-full h-[300px] bg-slate-100">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.2!2d109.23!3d-7.44!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjYnMjQuMCJTIDEwOcKwMTMnNDguMCJF!5e0!3m2!1sid!2sid!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.107363478036!2d109.23312049678955!3d-7.453373299999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e655d6a69756471%3A0x6d856570e72118e5!2sRKWK!5e0!3m2!1sid!2sid!4v1778081996914!5m2!1sid!2sid"
               width="100%"
-              height="300"
+              height="450"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Lokasi Rumah Kreatif Wadas Kelir"
             />
           </div>
         </div>

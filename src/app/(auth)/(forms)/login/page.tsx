@@ -65,7 +65,7 @@ export default function AuthPage() {
     setIsLoading(false);
 
     if (res?.ok) {
-      router.push("/dashboard");
+      router.push("/admin");
     } else {
       setError("Email atau password salah.");
     }
@@ -312,7 +312,7 @@ export default function AuthPage() {
           {/* Footer Links */}
           <div className="mt-10 flex justify-center items-center gap-8 text-[13px] text-slate-500 font-bold">
             <a
-              href="#"
+              href="/kontak"
               className="flex items-center gap-2 hover:text-[#9ABE4B] transition-colors"
             >
               <HelpCircle className="w-[18px] h-[18px]" /> Bantuan

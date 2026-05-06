@@ -33,11 +33,10 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/dashboard/:path*",
-    "/notifications/:path*",
-    "/reports/:path*",
-    "/setting/:path*",
-    "/users-management/:path*",
+    "/notifikasi",
     "/admin/:path*",
+    "/profil/:path*",
+    "/pinjaman/:path*",
+    "/detail-katalog/:path*",
   ],
 };

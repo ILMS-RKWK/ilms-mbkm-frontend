@@ -59,10 +59,13 @@ type NavItem = {
   children?: NavItem[];
 };
 
-export function SiteHeader({ title }: { title: string }) {
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+
+export function SiteHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   const { data: session } = useSession();
   const name = session?.user?.name || "User";
-  const role = session?.user?.roles?.[0]?.name || "Administrator";
+  const role = session?.user?.role === "admin" ? "Administrator" : session?.user?.role === "member" ? "Member" : "Administrator";
 
   const pathname = usePathname();
   const route = useRouter();
@@ -165,11 +168,11 @@ export function SiteHeader({ title }: { title: string }) {
   // --- NOTIFIKASI ---
   const { data } = useGetNotificationsQuery(
     { page: 1, paginate: 10 },
-    {
-      pollingInterval: 300000,
-      refetchOnFocus: true,
-      refetchOnMountOrArgChange: true,
-    }
+    // {
+    //   pollingInterval: 300000,
+    //   refetchOnFocus: true,
+    //   refetchOnMountOrArgChange: true,
+    // }
   );
   const notifications = data?.data || [];
   const hasUnread = notifications.some((n) => !n.read_at);
@@ -226,9 +229,12 @@ export function SiteHeader({ title }: { title: string }) {
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-2 h-4" />
         <div className="flex flex-col">
-          <h1 className="text-base font-semibold leading-none">{title}</h1>
+          <h1 className="text-xl font-bold leading-none text-foreground">{title}</h1>
+          {subtitle && (
+            <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
+          )}
 
-          {breadcrumbs.length > 0 && (
+          {!subtitle && breadcrumbs.length > 0 && (
             <div className="hidden md:flex items-center gap-1 text-xs text-muted-foreground mt-1">
               {breadcrumbs.map((item, index) => {
                 const isLast = index === breadcrumbs.length - 1;
@@ -263,6 +269,15 @@ export function SiteHeader({ title }: { title: string }) {
       </div>
 
       <div className="ml-auto flex items-center gap-4">
+        <div className="hidden md:flex items-center relative w-64 lg:w-80">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input 
+            type="search" 
+            placeholder="Cari peminjam atau buku..." 
+            className="w-full bg-muted/50 pl-9 border-none focus-visible:ring-1 rounded-full h-9"
+          />
+        </div>
+
         <ModeToggle />
 
         <div

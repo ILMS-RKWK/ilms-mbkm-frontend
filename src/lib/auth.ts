@@ -1,6 +1,5 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { User } from "@/types/user";
 
 export const authOptions: AuthOptions = {
   session: {
@@ -24,7 +23,7 @@ export const authOptions: AuthOptions = {
 
         // Step 1: Login untuk mendapatkan token
         const loginRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`,
           {
             method: "POST",
             headers: {
@@ -45,18 +44,18 @@ export const authOptions: AuthOptions = {
 
         // Step 2: Ambil data user dari /me
         const meRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/me`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/profile`,
           {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
               Accept: "application/json",
             },
-          }
+          },
         );
 
         const meData = await meRes.json();
-        const user: User = meData?.data;
+        const user = meData?.data?.user;
 
         if (!meRes.ok || !user) return null;
 
@@ -65,7 +64,10 @@ export const authOptions: AuthOptions = {
           email: user.email,
           name: user.name,
           token: token,
-          roles: user.roles || [],
+          role: user.role,
+          status: user.status,
+          address: user.address,
+          phone: user.phone,
         };
       },
     }),
@@ -73,19 +75,25 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
-        token.token = user.token;
-        token.roles = user.roles;
+        token.id = user.id as number;
+        token.email = user.email as string;
+        token.name = user.name as string;
+        token.token = user.token as string;
+        token.role = user.role as "admin" | "member";
+        token.status = user.status as string;
+        if (user.address) token.address = user.address as string;
+        if (user.phone) token.phone = user.phone as string;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as number;
-        session.user.token = token.token as string;
-        session.user.roles = token.roles as User["roles"];
+        session.user.id = token.id;
+        session.user.token = token.token;
+        session.user.role = token.role;
+        session.user.status = token.status;
+        if (token.address) session.user.address = token.address;
+        if (token.phone) session.user.phone = token.phone;
       }
       return session;
     },

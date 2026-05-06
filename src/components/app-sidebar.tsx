@@ -2,19 +2,12 @@
 
 import * as React from "react";
 import {
-  IconBuildingCommunity,
-  IconCalendarStats,
   IconDashboard,
-  IconDeviceDesktopCog,
-  IconDevicesCog,
-  IconReport,
-  IconReportMoney,
-  IconSettings,
-  IconSettingsUp,
-  IconShieldUp,
-  IconUserCog,
+  IconBook,
   IconUsers,
-  IconUserScan,
+  IconClipboardList,
+  IconChartBar,
+  IconSettings,
 } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 
@@ -36,73 +29,34 @@ const NAV_DATA = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/admin",
       icon: IconDashboard,
     },
     {
-      title: "Manajemen",
-      url: "#",
-      icon: IconDeviceDesktopCog,
-      children: [
-        {
-          title: "Program Kerja",
-          url: "/management/program-kerja",
-          icon: IconDevicesCog,
-        },
-        {
-          title: "Inisiatif Strategis",
-          url: "/management/inisiatif-strategis",
-          icon: IconCalendarStats,
-        },
-        {
-          title: "Anggaran",
-          url: "/management/anggaran",
-          icon: IconReportMoney,
-        },
-        {
-          title: "Manajemen Resiko",
-          url: "/management/resiko",
-          icon: IconShieldUp,
-        },
-        {
-          title: "Manajemen Isu",
-          url: "/management/isu",
-          icon: IconSettingsUp,
-        },
-        {
-          title: "Manajemen Devisi",
-          url: "/management/devisi",
-          icon: IconBuildingCommunity,
-        },
-      ],
+      title: "Manajemen Buku",
+      url: "/admin/buku",
+      icon: IconBook,
     },
     {
-      title: "Reports",
-      url: "/reports",
-      icon: IconReport,
+      title: "Manajemen Anggota",
+      url: "/admin/anggota",
+      icon: IconUsers,
     },
     {
-      title: "Manajemen User",
-      url: "#",
-      icon: IconUserCog,
-      children: [
-        {
-          title: "Manajemen User",
-          url: "/users-management",
-          icon: IconUsers,
-        },
-        {
-          title: "Manajemen Role",
-          url: "/users-management/roles-permissions",
-          icon: IconUserScan,
-        },
-      ],
+      title: "Permintaan Pinjam",
+      url: "/admin/permintaan",
+      icon: IconClipboardList,
     },
   ],
   navSecondary: [
     {
-      title: "Settings",
-      url: "/setting",
+      title: "Analitik",
+      url: "/admin/analitik",
+      icon: IconChartBar,
+    },
+    {
+      title: "Pengaturan",
+      url: "/admin/pengaturan",
       icon: IconSettings,
     },
   ],
