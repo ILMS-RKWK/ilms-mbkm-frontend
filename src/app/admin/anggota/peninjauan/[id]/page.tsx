@@ -7,7 +7,8 @@ import { Check, X, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function DetailPeninjauanPage({ params }: { params: { id: string } }) {
+export default async function DetailPeninjauanPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   return (
     <div className="min-h-screen flex flex-col bg-slate-50/50">
       <SiteHeader 
@@ -38,7 +39,7 @@ export default function DetailPeninjauanPage({ params }: { params: { id: string 
               <div>
                 <h2 className="text-xl font-bold text-slate-900">Aditya Pratama</h2>
                 <div className="text-xs font-bold text-[#64748b] bg-[#f1f5f9] px-2 py-1 rounded-md w-fit mt-1">
-                  ID: REG-{params.id}
+                  ID: REG-{id}
                 </div>
               </div>
             </div>
