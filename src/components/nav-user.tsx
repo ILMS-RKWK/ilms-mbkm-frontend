@@ -1,29 +1,9 @@
 "use client";
 
-import {
-  // IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  // IconNotification,
-  // IconUserCircle,
-} from "@tabler/icons-react";
+import { IconLogout } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  // DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLogoutMutation } from "@/services/auth.service";
 import { signOut } from "next-auth/react";
 import Swal from "sweetalert2";
@@ -38,7 +18,6 @@ export function NavUser({
     avatar: string;
   };
 }) {
-  const { isMobile } = useSidebar();
   const [logout, { isLoading }] = useLogoutMutation();
 
   const handleLogout = async () => {
@@ -70,69 +49,38 @@ export function NavUser({
   };
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className="py-4">
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="text-muted-foreground truncate text-xs">
-                  {user.email}
-                </span>
-              </div>
-              <IconDotsVertical className="ml-auto size-4" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={4}
+        <div className="flex items-center justify-between bg-[#F8FAFC] rounded-2xl p-3 pr-5">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-11 w-11 rounded-full bg-amber-100">
+              <AvatarImage
+                src={user.avatar}
+                alt={user.name}
+                className="object-cover"
+              />
+              <AvatarFallback className="rounded-full bg-amber-100 text-amber-800">
+                {user.name.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="grid flex-1 text-left leading-tight">
+              <span className="truncate font-medium text-[14.5px] text-[#64748B]">
+                {user.name}
+              </span>
+              <span className="truncate text-[11px] text-[#94A3B8] font-medium mt-0.5">
+                Super Admin
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            disabled={isLoading}
+            className="text-[#94A3B8] hover:text-red-500 transition-colors"
+            title="Logout"
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
-                  </span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <IconUserCircle />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconCreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconNotification />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup> */}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout} disabled={isLoading}>
-              <IconLogout className="mr-2 h-4 w-4" />
-              Log out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <IconLogout stroke={2} className="size-[22px]" />
+          </button>
+        </div>
       </SidebarMenuItem>
     </SidebarMenu>
   );

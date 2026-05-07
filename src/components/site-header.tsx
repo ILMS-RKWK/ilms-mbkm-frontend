@@ -231,7 +231,7 @@ export function SiteHeader({ title, subtitle }: { title: string; subtitle?: stri
         <div className="flex flex-col">
           <h1 className="text-xl font-bold leading-none text-foreground">{title}</h1>
           {subtitle && (
-            <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
+            <p className="md:flex hidden text-sm text-muted-foreground mt-1">{subtitle}</p>
           )}
 
           {!subtitle && breadcrumbs.length > 0 && (

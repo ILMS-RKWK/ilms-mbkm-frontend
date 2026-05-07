@@ -56,15 +56,19 @@ const NavNode = ({
             e.preventDefault(); // Mencegah navigasi jika itu link parent
             toggleMenu(item.title);
           }}
-          className={isActive ? "bg-muted font-semibold" : ""}
+          className={
+            isActive
+              ? "bg-[#98BF4A]/10 text-[#98BF4A] hover:bg-[#98BF4A]/15 hover:text-[#98BF4A] font-semibold h-[50px] px-4 rounded-xl transition-colors duration-200"
+              : "text-[#64748b] hover:bg-[#98BF4A]/10 hover:text-[#98BF4A] font-medium h-[50px] px-4 rounded-xl transition-colors duration-200"
+          }
         >
-          {item.icon && <item.icon />}
-          <span className="flex-1">{item.title}</span>
+          {item.icon && <item.icon className="size-[22px] mr-3" stroke={2} />}
+          <span className="flex-1 text-[15px]">{item.title}</span>
           <IconChevronDown
             className={`transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
             }`}
-            size={16}
+            size={18}
           />
         </SidebarMenuButton>
 
@@ -93,10 +97,14 @@ const NavNode = ({
         <SidebarMenuButton
           tooltip={item.title}
           data-state={pathname === item.url ? "active" : undefined}
-          className={pathname === item.url ? "bg-muted font-semibold" : ""}
+          className={
+            pathname === item.url
+              ? "bg-[#98BF4A]/10 text-[#98BF4A] hover:bg-[#98BF4A]/15 hover:text-[#98BF4A] font-semibold h-[50px] px-4 rounded-xl transition-colors duration-200"
+              : "text-[#5e6e82] hover:bg-[#98BF4A]/10 hover:text-[#98BF4A] font-medium h-[50px] px-4 rounded-xl transition-colors duration-200"
+          }
         >
-          {item.icon && <item.icon />}
-          <span>{item.title}</span>
+          {item.icon && <item.icon className="size-[22px] mr-3" stroke={2} />}
+          <span className="text-[15px]">{item.title}</span>
         </SidebarMenuButton>
       </Link>
     </SidebarMenuItem>
@@ -115,8 +123,8 @@ export function NavMain({ items }: { items: NavItem[] }) {
   }, []);
 
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+    <SidebarGroup className="pl-8 pr-6 py-4">
+      <SidebarGroupLabel className="text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.1em] mb-4 p-0">
         MENU UTAMA
       </SidebarGroupLabel>
       <SidebarGroupContent className="flex flex-col gap-2">
